@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+
+<meta name="keywords" content="git,git命令,git常用命令" />
+<meta name="description" content="git常用命令" />
+<meta name="author" content="yipingg,github.com/yipingg" />
+<meta name="generator" content="notepad++" />
+<meta name="copyright" content="yipingg" />
+<meta name="revisit-after" content="1" />
+
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Window-target" content="_top" />
+<meta http-equiv="content-Type" content="text/html;charset=gb2312" />
+<meta http-equiv="Content-Language" content="zh-cn" />
+
+<link rel="stylesheet" type="text/css" href="git_common_command/git_common_command.css" />
+
+<title>GIT常用命令</title>
+
+</head>
+
+<body class="html">
+
+<div id="wrapper">
+
+<h3 id="bigtitle">git常用命令：</h3>
+
+<div id="git_config">
+<p class="smalltitle">配置git</p>
+<pre class="content">
+git config --global user.name <span class="data">"Your Name"</span>		配置昵称
+git config --global user.email <span class="data">"email@example.com"</span>	配置邮箱
+ssh-keygen -t rsa -C <span class="data">"youremail@example.com</span>		生成sshKey
+</pre>
+</div>
+
+<div id="git_init">
+<p class="smalltitle">创建版本库</p>
+<pre class="content">
+git init  将该目录变为git可以管理的仓库
+</pre>
+</div>
+
+<div id="git_add">
+<p class="smalltitle">添加文件</p>
+<pre class="content">
+git add <span class="data">readme.txt</span>  把文件添加到仓库
+</pre>
+</div>
+
+<div id="git_commit">
+<p class="smalltitle">提交文件</p>
+<pre class="content">
+git commit -m <span class="data">"message"</span>  提交文件到版本库
+</pre>
+</div>
+
+<div id="git_status">
+<p class="smalltitle">查看仓库状态</p>
+<pre class="content">
+git status <span class="data">[-s]</span>
+</pre>
+</div>
+
+<div id="git_diff">
+<p class="smalltitle">查看修改</p>
+<pre class="content">
+git diff <span class="data">readme.txt</span>  比较工作区和暂存区文件差异
+</pre>
+</div>
+
+<div id="git_log">
+<p class="smalltitle">查看日志</p>
+<pre class="content">
+git log <span class="data">[--pretty=oneline]</span>
+</pre>
+</div>
+
+<div id="git_reset">
+<p class="smalltitle">版本回退</p>
+<pre class="content">
+<span class="data">HEAD</span> 指向的版本就是当前版本，git允许我们在版本的历史之间穿梭，使用命令<span class="data"> git reset --hard commit_id</span>。
+穿梭前，用 <span class="data">git log</span> 可以查看提交历史，以便确定要回退到哪个版本。
+要重返未来，用 <span class="data">git reflog</span> 查看命令历史，以便确定要回到未来的哪个版本。
+</pre>
+</div>
+
+<div id="git_checkout_--">
+<p class="smalltitle">撤销修改</p>
+<pre class="content">
+git checkout -- <span class="data">readme.txt</span>
+一种是 readme.txt 自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+一种是 readme.txt 已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+总之，就是让这个文件回到最近一次<span class="data"> git commit</span> 或 <span class="data">git add</span> 时的状态。
+
+git reset HEAD file：
+    可以把暂存区的修改撤销掉（unstage），重新放回工作区：
+
+<span class="data">小结：</span>
+    场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+    场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
+    场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退，不过前提是没有推送到远程库。
+</pre>
+</div>
+
+<div id="git_rm">
+<p class="smalltitle">删除文件</p>
+<pre class="content">
+rm <span class="data">readme.txt</span>
+    从版本库删除文件
+        git rm <span class="data">readme.txt</span>
+        git commit -m <span class="data">"message"</span>
+    误删除文件，从版本库恢复
+        git checkout -- <span class="data">readme.txt</span>
+</pre>
+</div>
+
+<div id="git_remote_add">
+<p class="smalltitle">添加远程库</p>
+<pre class="content">
+要关联一个远程库，使用命令 <span class="data">git remote add origin git@server-name:path/repo-name.git</span>；
+关联后，使用命令 <span class="data">git push -u origin master</span> 第一次推送master分支的所有内容；
+此后，每次本地提交后，只要有必要，就可以使用命令 <span class="data">git push origin master</span> 推送最新修改。
+</pre>
+</div>
+
+<div id="git_clone">
+<p class="smalltitle">从远程库克隆</p>
+<pre class="content">
+git clone git@github.com:yipingg/doc.git
+</pre>
+</div>
+
+<div id="git_branch">
+<p class="smalltitle">创建、合并、切换、删除分支</p>
+<pre class="content">
+查看分支：git branch <span class="data">[-r]</span>
+创建分支：git branch <span class="data">&ltname&gt</span>
+切换分支：git checkout <span class="data">&ltname&gt</span>
+创建+切换分支：git checkout -b <span class="data">&ltname&gt</span>
+合并某分支到当前分支：git merge <span class="data">&ltname&gt</span>
+合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并，作为一次提交需要添加 -m "message"
+删除分支：git branch -d <span class="data">&ltname&gt</span>
+要丢弃一个没有被合并过的分支，可以通过git branch -D <span class="data">&ltname&gt</span>强行删除
+</pre>
+</div>
+
+<div id="git_branch_bug">
+<p class="smalltitle">Bug分支策略</p>
+<pre class="content">
+当手头工作没有完成时，先把工作现场<span class="data">git stash</span>一下，然后去修复bug，
+修复后，再<span class="data">git stash pop</span>，回到工作现场。
+<span class="data">git stash</span>  保存现场
+<span class="data">git stash list</span>  查看已保存现场
+<span class="data">git stash pop</span>  恢复最后一次保存stash，并删除该stash
+<span class="data">git stash apply stash_id</span>  恢复到指定stash，stash内容并不删除
+<span class="data">git stash drop</span>  删除stash
+</pre>
+</div>
+
+<div id="git_push">
+<p class="smalltitle">多人协作</p>
+<pre class="content">
+查看远程库信息，使用 <span class="data">git remote -v</span>
+本地新建的分支如果不推送到远程，对其他人就是不可见的；
+从本地推送分支，使用 <span class="data">git push origin branch-name</span>，如果推送失败，先用 <span class="data">git pull</span> 抓取远程的新提交；
+在本地创建和远程分支对应的分支，使用 <span class="data">git checkout -b branch-name origin/branch-name</span>，本地和远程分支的名称最好一致；
+建立本地分支和远程分支的关联，使用 <span class="data">git branch --set-upstream-to=origin/branch-name branch-name</span>；
+从远程抓取分支，使用 <span class="data">git pull</span>，如果有冲突，要先处理冲突。
+</pre>
+</div>
+
+<div id="git_tag">
+<p class="smalltitle">创建标签</p>
+<pre class="content">
+git tag <span class="data">name [commit_id]</span>  用于新建一个标签，默认打在最新提交的commit上，也可以指定一个commit id；
+git tag -a <span class="data">tagname</span> -m <span class="data">"blablabla..."</span>  可以指定标签信息；
+git tag -s <span class="data">tagname</span> -m <span class="data">"blablabla..."</span>  可以用PGP签名标签；
+git tag  查看所有标签。
+</pre>
+</div>
+
+<div id="git_tag_delete">
+<p class="smalltitle">操作标签</p>
+<pre class="content">
+git push origin <span class="data">tagname</span>  可以推送一个本地标签；
+git push origin --tags  可以推送全部未推送过的本地标签；
+git tag -d <span class="data">tagname</span>  可以删除一个本地标签；
+git push origin :refs/tags/tagname  可以删除一个远程标签。
+</pre>
+</div>
+
+<div id="git_remote_rm_origin">
+<p class="smalltitle">关联多个远程库</p>
+<pre class="content">
+git remote rm <span class="data">origin</span>  删除已关联的远程库，origin只是默认名称而已
+git remote add <span class="data">github</span> git@github.com:yipingg/doc.git  关联github远程库，名称为github
+git remote add <span class="data">gitee</span> git@github.com:yipingg/doc.git  关联gitee远程库，名称为gitee
+git push <span class="data">github</span> master  推送代码到github
+git push <span class="data">gitee</span> master  推送代码到gitee
+</pre>
+</div>
+
+<div id="git_ignore">
+<p class="smalltitle">忽略特殊文件</p>
+<pre class="content">
+忽略某些文件时，需要编写 .gitignore；
+.gitignore 文件本身要放到版本库里，并且可以对 .gitignore 做版本管理；
+git check-ignore -v config.ini  检测规则问题
+</pre>
+</div>
+
+<div id="git_config_file">
+<p class="smalltitle">配置文件</p>
+<pre class="content">
+git config --global alias.<span class="data">st</span> status  配置别名
+--global 针对当前用户起作用，不加则只针对本仓库
+.git/config 配置文件
+</pre>
+</div>
+
+<div id="footer">
+<p>Revised by yipingg，E-mail：747252614@qq.com<p>
+</div>
+
+</div>
+
+</body>
+
+</html>
